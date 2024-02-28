@@ -6,4 +6,6 @@
 
     <color name="clear">#00FFFFFF</color>
     <color name="background_layout">#FF1A5853</color>
+    <color name="en_tiempo">#FF59EF6A</color>
+    <color name="retrasado">#FFFA2F0A</color>
 </resources>
