@@ -18,8 +18,11 @@ import mx.ulab.retoadabyron.databinding.ActivityAireBinding
 class AireActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAireBinding
     val aireType = object : TypeToken<List<AireData>>() {}.type
-    val aireDataList: List<AireData> = Gson().fromJson(Constants.aireJson,
-        aireType)
+    val aireDataList: List<AireData> = Gson().fromJson(
+        Constants.aireJson,
+        aireType
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAireBinding.inflate(layoutInflater)
@@ -33,8 +36,7 @@ class AireActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
         spinner.adapter = adapter
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
-        {
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
@@ -48,7 +50,8 @@ class AireActivity : AppCompatActivity() {
                 val locationSelected = aireDataList[position]
                 val emc = locationSelected.current.air_quality
                 //13emáforo1313ón
-                binding.locationText.text = "${locationSelected.location.name}, ${locationSelected.location.region}"
+                binding.locationText.text =
+                    "${locationSelected.location.name}, ${locationSelected.location.region}"
 //pm
                 binding.pmText.text = "$emc"
 //13emáforo13
@@ -69,6 +72,7 @@ class AireActivity : AppCompatActivity() {
                 val drawable = binding.pmText.background as? GradientDrawable
                 drawable?.setStroke(20, Color.parseColor(colorString))
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
 // Otra lógica para cuando no se selecciona nada
             }
