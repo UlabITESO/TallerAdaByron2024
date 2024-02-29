@@ -8,16 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import mx.ulab.retoadabyron.aire.AireActivity
 import mx.ulab.retoadabyron.transporte.TransporteActivity
 
 class HomeAdapter(private val items: List<Any>, private val context: Context)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val VIEW_TRANSPORTE = 1
+        private const val VIEW_AIRE = 2
     }
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is Transporte -> VIEW_TRANSPORTE
+            is Aire -> VIEW_AIRE
             else -> throw IllegalArgumentException("Tipo de elemento desconocido en la posición $position")
         }
     }
@@ -29,6 +32,12 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
                     .inflate(R.layout.transporte_layout, parent, false)
                 TransporteViewHolder(view)
             }
+            VIEW_AIRE -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.aire_layout,
+                        parent,false)
+                AireViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Tipo de vista desconocido")
         }
     }
@@ -37,6 +46,10 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
         when (holder) {
             is TransporteViewHolder -> {
                 val item = items[position] as Transporte
+                holder.bind(item, context)
+            }
+            is AireViewHolder -> {
+                val item = items[position] as Aire
                 holder.bind(item, context)
             }
         }
@@ -54,5 +67,17 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
             }
         }
     }
+
+    class AireViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(item: Aire, context: Context) {
+            val textView : TextView = itemView.findViewById(R.id.titleTV)
+            textView.text = item.texto
+            itemView.setOnClickListener {
+                val intent = Intent(context, AireActivity::class.java)
+                context.startActivity(intent)
+            }
+        }
+    }
 }
 data class Transporte(val texto: String)
+data class Aire(val texto: String)

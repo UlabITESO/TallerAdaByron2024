@@ -9,8 +9,10 @@ import mx.ulab.retoadabyron.databinding.ActivityHomeBinding
 class HomeActivity : AppCompatActivity() {
 
     val items: List<Any> = listOf(
-        Transporte("Transporte")
+        Transporte("Transporte"),
+        Aire("Calidad del aire")
     )
+
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

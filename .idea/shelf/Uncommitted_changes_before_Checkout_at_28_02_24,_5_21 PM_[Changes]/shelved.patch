@@ -1,0 +1,18 @@
+Index: app/src/main/java/mx/ulab/retoadabyron/HomeAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mx.ulab.retoadabyron\n\nimport android.content.Context\nimport android.util.Log\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.TextView\nimport androidx.recyclerview.widget.RecyclerView\n\nclass HomeAdapter(private val items: List<Any>, private val context: Context)\n    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {\n    companion object {\n        private const val VIEW_TRANSPORTE = 1\n    }\n    override fun getItemViewType(position: Int): Int {\n        return when (items[position]) {\n            is Transporte -> VIEW_TRANSPORTE\n            else -> throw IllegalArgumentException(\"Tipo de elemento desconocido en la posición $position\")\n        }\n    }\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):\n            RecyclerView.ViewHolder {\n        return when (viewType) {\n                    VIEW_TRANSPORTE -> {\n                val view = LayoutInflater.from(parent.context)\n                    .inflate(R.layout.transporte_layout, parent, false)\n                TransporteViewHolder(view)\n            }\n            else -> throw IllegalArgumentException(\"Tipo de vista desconocido\")\n        }\n    }\n    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position:\n    Int) {\n        when (holder) {\n            is TransporteViewHolder -> {\n                val item = items[position] as Transporte\n                holder.bind(item, context)\n            }\n        }\n    }\n    override fun getItemCount() = items.size\n    class TransporteViewHolder(itemView: View) :\n        RecyclerView.ViewHolder(itemView) {\n        fun bind(item: Transporte, context: Context) {\n            val textView : TextView = itemView.findViewById(R.id.titleTV)\n            textView.text = item.texto\n            itemView.setOnClickListener {\n                Log.d(\"HomeAdapter\", \"tap tap tap\")\n            }\n        }\n    }\n}\ndata class Transporte(val texto: String)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/mx/ulab/retoadabyron/HomeAdapter.kt b/app/src/main/java/mx/ulab/retoadabyron/HomeAdapter.kt
+--- a/app/src/main/java/mx/ulab/retoadabyron/HomeAdapter.kt	(revision 015d235129a3602348a5d83e0acdbd9b834e5e86)
++++ b/app/src/main/java/mx/ulab/retoadabyron/HomeAdapter.kt	(date 1709162446365)
+@@ -47,6 +47,7 @@
+             textView.text = item.texto
+             itemView.setOnClickListener {
+                 Log.d("HomeAdapter", "tap tap tap")
++
+             }
+         }
+     }
