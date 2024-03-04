@@ -54,8 +54,9 @@ class TransporteActivity : AppCompatActivity() {
                 val costo = transporteDataList[position].costo
                 val frecuencia = transporteDataList[position].frecuencia
                 val status = transporteDataList[position].status
+                val tipo = transporteDataList[position].tipo_transporte
                 recyclerView.adapter = TransporteAdapter(paradasTransporte, costo,
-                    frecuencia, status)
+                    frecuencia, status, tipo)
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
 // Otra lógica para cuando no se selecciona nada

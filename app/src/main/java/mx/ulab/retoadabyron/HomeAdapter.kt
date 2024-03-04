@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import mx.ulab.retoadabyron.agua.AguaActivity
 import mx.ulab.retoadabyron.aire.AireActivity
 import mx.ulab.retoadabyron.transporte.TransporteActivity
 
@@ -16,11 +17,13 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
     companion object {
         private const val VIEW_TRANSPORTE = 1
         private const val VIEW_AIRE = 2
+        private const val VIEW_AGUA = 3
     }
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is Transporte -> VIEW_TRANSPORTE
             is Aire -> VIEW_AIRE
+            is Agua -> VIEW_AGUA
             else -> throw IllegalArgumentException("Tipo de elemento desconocido en la posición $position")
         }
     }
@@ -38,6 +41,12 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
                         parent,false)
                 AireViewHolder(view)
             }
+            VIEW_AGUA -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.agua_layout,
+                        parent,false)
+                AguaViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Tipo de vista desconocido")
         }
     }
@@ -50,6 +59,10 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
             }
             is AireViewHolder -> {
                 val item = items[position] as Aire
+                holder.bind(item, context)
+            }
+            is AguaViewHolder -> {
+                val item = items[position] as Agua
                 holder.bind(item, context)
             }
         }
@@ -78,6 +91,17 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
             }
         }
     }
+    class AguaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(item: Agua, context: Context) {
+            val textView : TextView = itemView.findViewById(R.id.titleTV)
+            textView.text = item.texto
+            itemView.setOnClickListener {
+                val intent = Intent(context, AguaActivity::class.java)
+                context.startActivity(intent)
+            }
+        }
+    }
 }
 data class Transporte(val texto: String)
 data class Aire(val texto: String)
+data class Agua(val texto: String)
