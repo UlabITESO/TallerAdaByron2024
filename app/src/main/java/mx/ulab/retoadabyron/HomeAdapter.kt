@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.ulab.retoadabyron.agua.AguaActivity
 import mx.ulab.retoadabyron.aire.AireActivity
+import mx.ulab.retoadabyron.residuos.ResiduosActivity
 import mx.ulab.retoadabyron.transporte.TransporteActivity
 
 class HomeAdapter(private val items: List<Any>, private val context: Context)
@@ -18,12 +19,14 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
         private const val VIEW_TRANSPORTE = 1
         private const val VIEW_AIRE = 2
         private const val VIEW_AGUA = 3
+        private const val VIEW_RESIDUOS = 4
     }
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is Transporte -> VIEW_TRANSPORTE
             is Aire -> VIEW_AIRE
             is Agua -> VIEW_AGUA
+            is Residuos -> VIEW_RESIDUOS
             else -> throw IllegalArgumentException("Tipo de elemento desconocido en la posición $position")
         }
     }
@@ -47,6 +50,12 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
                         parent,false)
                 AguaViewHolder(view)
             }
+            VIEW_RESIDUOS -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.residuos_layout,
+                        parent,false)
+                ResiduosViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Tipo de vista desconocido")
         }
     }
@@ -63,6 +72,10 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
             }
             is AguaViewHolder -> {
                 val item = items[position] as Agua
+                holder.bind(item, context)
+            }
+            is ResiduosViewHolder -> {
+                val item = items[position] as Residuos
                 holder.bind(item, context)
             }
         }
@@ -101,7 +114,19 @@ class HomeAdapter(private val items: List<Any>, private val context: Context)
             }
         }
     }
+    class ResiduosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    {
+        fun bind(item: Residuos, context: Context) {
+            val textView : TextView = itemView.findViewById(R.id.titleTV)
+            textView.text = item.texto
+            itemView.setOnClickListener {
+                val intent = Intent(context, ResiduosActivity::class.java)
+                context.startActivity(intent)
+            }
+        }
+    }
 }
 data class Transporte(val texto: String)
 data class Aire(val texto: String)
 data class Agua(val texto: String)
+data class Residuos(val texto: String)

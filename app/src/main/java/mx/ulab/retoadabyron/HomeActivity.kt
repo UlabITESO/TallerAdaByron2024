@@ -11,7 +11,8 @@ class HomeActivity : AppCompatActivity() {
     val items: List<Any> = listOf(
         Transporte("Transporte"),
         Aire("Calidad del aire"),
-        Agua("Calidad del agua")
+        Agua("Calidad del agua"),
+        Residuos("Residuos")
     )
 
     private lateinit var binding: ActivityHomeBinding
